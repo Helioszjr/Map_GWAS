@@ -1,0 +1,26 @@
+---
+title: |
+  ![](img/pgm.png){width=60%} 
+  
+  Aula mapeamento por associação - GWAS
+author: "- Helio de Souza Junior,^[Universidade Estadual de Maringá, helioszjr@gmail.com] PG:55679"
+date: "06-01-2025"
+lang: pt
+toc: true
+code-annotations: "hover"
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# download Rtools
+
+library("mrMLM.GUI")
+mrMLM.GUI()
+```
+
