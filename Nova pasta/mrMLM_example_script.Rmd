@@ -1,0 +1,76 @@
+---
+title: "Exemplo de uso do pacote mrMLM.GUI"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Instalar e carregar o pacote
+
+```{r install}
+if (!requireNamespace("mrMLM.GUI", quietly = TRUE)) {
+  install.packages("mrMLM.GUI", repos = "https://cran.r-project.org")
+}
+library(mrMLM.GUI)
+```
+
+## Definir diretório de trabalho
+
+```{r setwd}
+# Altere se quiser salvar em outro local
+setwd(tempdir())
+```
+
+## Simular dados de genótipos
+
+```{r genotype}
+genotype <- data.frame(
+  Marker = paste0("M", 1:10),
+  Chromosome = rep(1, 10),
+  Position = seq(1, 100, length.out = 10)
+)
+set.seed(123)
+geno_codes <- c("AA", "AB", "BB")
+for (i in 1:5) {
+  genotype[[paste0("Ind", i)]] <- sample(geno_codes, 10, replace = TRUE)
+}
+write.table(genotype, "genotype.txt", sep = "\t", row.names = FALSE, quote = FALSE)
+```
+
+## Simular dados de fenótipos
+
+```{r phenotype}
+phenotype <- data.frame(
+  Taxa = paste0("Ind", 1:5),
+  Trait1 = round(runif(5, 10, 20), 2)
+)
+write.table(phenotype, "phenotype.txt", sep = "\t", row.names = FALSE, quote = FALSE)
+```
+
+## Rodar análise QTL com mrMLM
+
+```{r mrmlm}
+mrMLM(
+  fileGenotype = "genotype.txt",
+  filePhenotype = "phenotype.txt",
+  fileMap = NULL,
+  fileKin = NULL,
+  filePC = NULL,
+  method = c("mrMLM"),
+  trait = 1,
+  Likelihood = "REML",
+  SearchRadius = 10,
+  CriticalLOD = 3,
+  Bin = 5,
+  CV = 5,
+  CutOff = 0.01,
+  Dir = getwd(),
+  CreateReport = TRUE
+)
+```
+
+## Conclusão
+
+Os resultados da análise estarão disponíveis no diretório de trabalho definido acima.
